@@ -37,6 +37,38 @@ Create `credentials.json`. Get these details from an existing developer. The fil
 }
 ```
 
+## use a virtual environment
+
+It is good practice to use a virtual environment. I use pip and venv for this. Set it up once with:
+
+```
+python -m venv dev_environment
+```
+
+To activate, run:
+
+```
+dev_environment\\Scripts\\activate.bat
+```
+
+Install the required modules:
+
+```
+pip install -r requirements.txt
+```
+
+When you are done, call:
+
+```
+deactivate
+```
+
+Make sure to keep the requirements.txt file up to date.
+
+```
+pip freeze > requirements.txt
+```
+
 ## run the app
 
 To run the app run:
