@@ -2,6 +2,21 @@
 
 This is a project for the Amodo Design Google Chat bot. It was originally set up to send out Amodo Task summaries to users.
 
+⚠️ this project is still in development - currently uses a local version of the time entries database and does not have access to recent time entries
+
+## what the bot can do
+
+Users in the Amodo Design Google Workspace can message the bot on Google Chat and request a weekly summary by using the command:
+
+```
+/weeklySummary
+```
+
+Users can also use the following argument flags:
+
+- `-e --email` for specifying the email of the user for which the summary should be created - this defaults to the user messaging
+- `-w --week` for specifying the week number for which the summary should be created - this defaults to the most recent full week and currently only supports weeks from the same calendar year
+
 ## dev set up
 
 Create `credentials.json`. Get these details from an existing developer. The file looks something like this:
