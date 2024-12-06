@@ -2,6 +2,7 @@ from time_entries_db_tools import get_time_entries
 import chat_bot_tools
 
 import datetime
+from datetime import date
 from isoweek import Week
 
 
@@ -24,6 +25,7 @@ def breakdown_for_user(user_email, week_number, space_name):
     '''
     Sends a card to the space with a breakdown of time entries for the user.
     '''
+    print('sending breakdown for user {} for week {}'.format(user_email, week_number))
     monday, sunday  = get_week_dates(week_number)
     title_text = 'week {} (Monday {} - Sunday {}) for {}\n\n'.format(week_number, monday.strftime('%d.%b'), sunday.strftime('%d.%b'), user_email)
 
@@ -45,19 +47,24 @@ def breakdown_for_user(user_email, week_number, space_name):
 
 
     # get and print stats
-    total_seconds_logged = time_entries['duration'].sum().total_seconds()
+    total_time_logged = time_entries['duration'].sum()
+    total_seconds_logged = total_time_logged.total_seconds()
     total_hours_logged = total_seconds_logged / (60 * 60)
     total_hours_logged_string = hours_to_string(total_hours_logged)
 
-    projects_worked_on = time_entries['project'].unique()
-
-    seconds_spent_in_meetings = time_entries[time_entries['type'] == 'Meeting']['duration'].sum().total_seconds()
-    hours_spent_in_meetings = seconds_spent_in_meetings / (60 * 60)
-    hours_spent_in_meetings_string = hours_to_string(hours_spent_in_meetings)
-
     overview_text = ''
     overview_text += 'You logged <b>{}</b> '.format(total_hours_logged_string)
+
+    time_spent_in_meetings = time_entries[time_entries['type'] == 'Meeting']['duration'].sum()
+    if time_spent_in_meetings == 0:
+        hours_spent_in_meetings_string = 'no time'
+    else:
+        seconds_spent_in_meetings = time_spent_in_meetings.total_seconds()
+        hours_spent_in_meetings = seconds_spent_in_meetings / (60 * 60)
+        hours_spent_in_meetings_string = hours_to_string(hours_spent_in_meetings)
     overview_text += 'of which you spent <b>{}</b> in meetings. \n'.format(hours_spent_in_meetings_string)
+
+    projects_worked_on = time_entries['project'].unique()
     # overview_text += 'Projects worked on: {}\n'.format(projects_worked_on)
     # overview_text += 'Total number of time entries logged: {}\n\n'.format(len(time_entries))
 
