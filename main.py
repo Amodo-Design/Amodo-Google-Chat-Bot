@@ -110,7 +110,7 @@ def react(event):
         if arguments.week is not None:
             week_number = int(arguments.week)
         else:
-            week_number = datetime.datetime.now().isocalendar()[1]
+            week_number = int(datetime.datetime.now().isocalendar()[1])
             if week_number == 1:
                 send_message(
                     space_name = space_name,
