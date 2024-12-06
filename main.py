@@ -125,7 +125,7 @@ def react(event):
         else:
             send_message(
                 space_name = space_name,
-                message = 'I do not recognize that command. Try using the /weeklySummary command.'
+                message = 'I am sorry, I could not process your request. Please try again.'
             )
             return
 
