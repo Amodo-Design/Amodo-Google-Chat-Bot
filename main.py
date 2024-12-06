@@ -93,7 +93,14 @@ def react(event):
         else:
             argument_text = ''
 
-        arguments = parser.parse_args(argument_text.split())
+        try:
+            arguments = parser.parse_args(argument_text.split())
+        except:
+            send_message(
+                space_name = space_name,
+                message = 'I could not understand your arguments. Please try again.'
+            )
+            return
 
         if arguments.email is not None:
             user_email = arguments.email
