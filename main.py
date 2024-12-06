@@ -69,11 +69,11 @@ def react(event):
     space_name = event['space']['name']
     event_type = event['type']
 
-    sender_email = event['message']['sender']['email']
-
+    if event_type == 'MESSAGE':
+        sender_email = event['message']['sender']['email']
 
     # check if the event removed us from the space
-    if event['type'] == 'REMOVED_FROM_SPACE':
+    if event_type == 'REMOVED_FROM_SPACE':
         logging.info('app removed rom space %s', space_name)
         return
     # check if the event added us to the space
