@@ -15,7 +15,7 @@ from google.oauth2.service_account import Credentials
 from config_bot import SUBSCRIPTION_PATH
 
 from chat_bot_tools import send_message
-from summary_tools import breakdown_for_user
+from summary_tools import breakdown_for_user, wrapped2024
 
 
 SCOPES          = ["https://www.googleapis.com/auth/chat.bot"]
@@ -120,9 +120,19 @@ def react(event):
             else:
                 week_number -= 1
 
-        if command_id == 1:
-            breakdown_for_user(user_email, week_number, space_name)
-        else:
+        try:
+            if command_id == 1:
+                breakdown_for_user(user_email, week_number, space_name)
+            elif command_id == 24:
+                wrapped2024(user_email, space_name)
+            else:
+                send_message(
+                    space_name = space_name,
+                    message = 'I do not recognize that command. Try using the /weeklySummary command.'
+                )
+                return
+        except Exception as e:
+            logging.error('error:', e)
             send_message(
                 space_name = space_name,
                 message = 'I am sorry, I could not process your request. Please try again.'
