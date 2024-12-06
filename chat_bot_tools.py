@@ -61,7 +61,7 @@ def send_card(
     '''
 
     sections = [{
-        "header": "overview",
+        "header": "",
         "widgets": [{ "text_paragraph": {
                 "text": overview_text
             }}
